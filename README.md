@@ -284,11 +284,11 @@ Either way your captures in `~/Pictures/adbshot` are never touched.
 
 This tool grows from what people actually need it to do.
 
-- **Want a feature?** [Open an issue with the `feature` label](https://github.com/acosta290/adbshot/issues/new?labels=feature)
+- **Want a feature?** [Open a feature request](https://github.com/acosta290/adbshot/issues/new?template=feature_request.yml)
   and describe what you are trying to get done. If it fits, we will try to build it.
-- **Hit a bug?** [Open an issue with the `bug` label](https://github.com/acosta290/adbshot/issues/new?labels=bug).
-  Paste the output of `adbshot --self-check` and of `journalctl --user -u adbshot -b`;
-  that is usually enough to find it straight away.
+- **Hit a bug?** [Open a bug report](https://github.com/acosta290/adbshot/issues/new?template=bug_report.yml).
+  The form asks for the output of `adbshot --self-check` and of `journalctl --user -u adbshot -b`,
+  which is usually enough to find the problem straight away.
 
 No idea is too small — a shortcut you keep wishing existed, a format that is missing, an
 awkward step in your workflow. Between all of us this becomes a better tool.

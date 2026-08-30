@@ -1,0 +1,37 @@
+name: Feature request
+description: Suggest something adbshot should be able to do
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        No idea is too small. A shortcut you keep wishing existed, a format that is
+        missing, an awkward step in your workflow — all of it is worth raising.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to get done?
+      description: >-
+        Describe the situation rather than the solution. Knowing what you are
+        actually trying to achieve often leads to a better answer than the one
+        either of us had in mind.
+      placeholder: I paste captures into a chat app and they are always too large.
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What did you have in mind?
+      description: Optional. How you imagine it working, if you have a picture of it.
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else
+      description: Screenshots, links, or how you solve it today.
+    validations:
+      required: false

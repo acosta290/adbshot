@@ -1,0 +1,62 @@
+name: Bug report
+description: Something does not work the way it should
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. The two command outputs below usually pin the
+        problem down straight away, so please paste them even if they look boring.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you got instead.
+      placeholder: I pressed Super+X and nothing appeared on the clipboard.
+    validations:
+      required: true
+
+  - type: textarea
+    id: self-check
+    attributes:
+      label: Output of `adbshot --self-check`
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: journal
+    attributes:
+      label: Output of `journalctl --user -u adbshot -b | tail -50`
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: system
+    attributes:
+      label: Distribution and GNOME version
+      placeholder: Ubuntu 24.04, GNOME 46
+    validations:
+      required: true
+
+  - type: dropdown
+    id: session
+    attributes:
+      label: Session type
+      description: The value of `echo $XDG_SESSION_TYPE`
+      options:
+        - wayland
+        - x11
+        - not sure
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Phone and Android version
+      placeholder: Pixel 10a, Android 16
+    validations:
+      required: false

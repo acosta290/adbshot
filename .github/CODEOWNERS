@@ -1,0 +1,6 @@
+# Every file in this repository is owned by the maintainer, who is requested as
+# a reviewer on any pull request that touches it.
+#
+# On its own this only *requests* the review. To make it mandatory, add a
+# ruleset on `main` with "Require review from Code Owners" enabled.
+* @acosta290
