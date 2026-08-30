@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>@APP_ID@</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+
+  <url type="homepage">@HOMEPAGE@</url>
+  <url type="bugtracker">@HOMEPAGE@/issues</url>
+
+  <developer id="io.github.acosta290">
+    <name>Ricardo Acosta</name>
+  </developer>
+
+  <name>adbshot</name>
+  <summary>Screenshot your Android phone straight to the clipboard</summary>
+  <summary xml:lang="es">Captura la pantalla del móvil directamente al portapapeles</summary>
+
+  <description>
+    <p>
+      adbshot puts a screenshot of your adb-connected Android phone on your
+      computer's clipboard with a single keypress. It lives in the system tray,
+      saves each capture to a folder of your choosing, and lets you pick the
+      image format, quality and scale.
+    </p>
+    <p xml:lang="es">
+      adbshot deja una captura de la pantalla del móvil Android conectado por ADB
+      en el portapapeles del ordenador con una sola pulsación. Vive en la bandeja
+      del sistema, guarda cada captura en la carpeta que elijas y permite escoger
+      formato, calidad y escala.
+    </p>
+    <ul>
+      <li>Global shortcut, Super+X by default and rebindable</li>
+      <li>PNG, JPEG or WebP, with quality and output scale</li>
+      <li>Remembers which phone to use when several are connected</li>
+      <li>Optional auto-paste with a configurable shortcut</li>
+      <li>English and Spanish interface, switchable at runtime</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">@APP_ID@.desktop</launchable>
+  <categories>
+    <category>Utility</category>
+  </categories>
+  <keywords>
+    <keyword>screenshot</keyword>
+    <keyword>android</keyword>
+    <keyword>adb</keyword>
+    <keyword>clipboard</keyword>
+  </keywords>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="1.0.0" date="2026-08-30"/>
+  </releases>
+</component>

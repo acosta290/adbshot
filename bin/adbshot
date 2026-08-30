@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""adbshot launcher. Resolves its own real path so a symlink into PATH works."""
+import os
+import sys
+
+_real = os.path.realpath(__file__)
+_root = os.path.dirname(os.path.dirname(_real))
+for _candidate in (os.path.join(_root, "src"), os.path.join(_root, "lib", "adbshot")):
+    if os.path.isdir(os.path.join(_candidate, "adbshot")):
+        sys.path.insert(0, _candidate)
+        break
+
+from adbshot.cli import main  # noqa: E402
+
+if __name__ == "__main__":
+    sys.exit(main())

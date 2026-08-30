@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- adbshot application icon.
+     The phone framed by capture brackets, with the captured screen landing on
+     a clipboard sheet: capture on the left, clipboard on the right, which is
+     exactly what the tool does. -->
+  <defs>
+    <linearGradient id="adbshot-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6b8cff"/>
+      <stop offset="1" stop-color="#2b3bb5"/>
+    </linearGradient>
+    <linearGradient id="adbshot-screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9defff"/>
+      <stop offset="1" stop-color="#38a8e8"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#adbshot-bg)"/>
+
+  <!-- capture brackets -->
+  <g stroke="#ffd166" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M26 43 V31 h12"/>
+    <path d="M102 43 V31 h-12"/>
+    <path d="M26 85 V97 h12"/>
+    <path d="M102 85 V97 h-12"/>
+  </g>
+
+  <!-- phone -->
+  <rect x="45" y="26" width="34" height="76" rx="8" fill="#101a3d"/>
+  <rect x="49" y="33" width="26" height="62" rx="3" fill="url(#adbshot-screen)"/>
+  <circle cx="62" cy="29.5" r="1.5" fill="#3d4a7a"/>
+
+  <!-- the capture, landed on the clipboard -->
+  <rect x="75" y="67" width="32" height="38" rx="6" fill="#0d1430" opacity="0.30"/>
+  <rect x="73" y="65" width="32" height="38" rx="6" fill="#ffffff"/>
+  <g stroke="#2b3bb5" stroke-width="3.6" stroke-linecap="round">
+    <path d="M80 76 h18"/>
+    <path d="M80 84 h18"/>
+    <path d="M80 92 h11"/>
+  </g>
+</svg>

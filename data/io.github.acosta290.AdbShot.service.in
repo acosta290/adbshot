@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=io.github.acosta290.AdbShot
+Exec=@BINDIR@/adbshot --gapplication-service
+SystemdService=adbshot.service

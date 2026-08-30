@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+
+  <enum id="io.github.acosta290.AdbShot.ImageFormat">
+    <value nick="png"  value="0"/>
+    <value nick="jpeg" value="1"/>
+    <value nick="webp" value="2"/>
+  </enum>
+
+  <enum id="io.github.acosta290.AdbShot.ClipboardMode">
+    <value nick="off"        value="0"/>
+    <value nick="copy"       value="1"/>
+    <value nick="copy-paste" value="2"/>
+  </enum>
+
+  <schema id="io.github.acosta290.AdbShot" path="/io/github/acosta290/AdbShot/">
+
+    <key name="save-enabled" type="b">
+      <default>true</default>
+      <summary>Write each capture to disk</summary>
+      <description>When false the capture only reaches the clipboard and no file is kept.</description>
+    </key>
+
+    <key name="save-directory" type="s">
+      <default>''</default>
+      <summary>Folder captures are saved to</summary>
+      <description>Empty means the built-in default: XDG Pictures / adbshot.</description>
+    </key>
+
+    <key name="filename-template" type="s">
+      <default>'{modelo}_{fecha}_{hora}'</default>
+      <summary>Filename template, without extension</summary>
+      <description>Tokens: {modelo} {serie} {fecha} {hora} {ancho} {alto}.</description>
+    </key>
+
+    <key name="image-format" enum="io.github.acosta290.AdbShot.ImageFormat">
+      <default>'png'</default>
+      <summary>Output image format</summary>
+    </key>
+
+    <key name="quality" type="i">
+      <range min="1" max="100"/>
+      <default>90</default>
+      <summary>Encoder quality for lossy formats</summary>
+      <description>Ignored for PNG, which is lossless.</description>
+    </key>
+
+    <key name="scale-percent" type="i">
+      <range min="10" max="100"/>
+      <default>100</default>
+      <summary>Output scale as a percentage of the device resolution</summary>
+    </key>
+
+    <key name="clipboard-mode" enum="io.github.acosta290.AdbShot.ClipboardMode">
+      <default>'copy'</default>
+      <summary>What to do with the clipboard after a capture</summary>
+      <description>copy-paste is experimental: it lights GNOME's screen-sharing indicator for 5s.</description>
+    </key>
+
+    <key name="paste-shortcut" type="s">
+      <default>'&lt;Control&gt;v'</default>
+      <summary>Shortcut to synthesise when auto-paste is on</summary>
+      <description>Not every app pastes an image with Ctrl+V. Claude Code's CLI, for
+      example, takes Ctrl+Super+V. GTK accelerator syntax.</description>
+    </key>
+
+    <key name="paste-settle-ms" type="i">
+      <range min="0" max="2000"/>
+      <default>120</default>
+      <summary>Delay between writing the clipboard and injecting Ctrl+V</summary>
+    </key>
+
+    <key name="preferred-device" type="s">
+      <default>''</default>
+      <summary>Serial of the device to capture without asking</summary>
+    </key>
+
+    <key name="always-ask-device" type="b">
+      <default>false</default>
+      <summary>Always show the device chooser, even with one device</summary>
+    </key>
+
+    <key name="sound-enabled" type="b">
+      <default>true</default>
+      <summary>Play a shutter sound when a capture starts</summary>
+    </key>
+
+    <key name="notification-enabled" type="b">
+      <default>true</default>
+      <summary>Show a notification with a thumbnail when a capture finishes</summary>
+    </key>
+
+    <key name="language" type="s">
+      <default>'en'</default>
+      <summary>Interface language</summary>
+      <description>A two-letter code, or 'auto' to follow the session locale. English
+      is the default so the app reads the same everywhere out of the box.</description>
+    </key>
+
+    <key name="hotkey" type="s">
+      <default>'&lt;Super&gt;x'</default>
+      <summary>Global shortcut, in GTK accelerator syntax</summary>
+    </key>
+
+    <key name="last-capture" type="s">
+      <default>''</default>
+      <summary>Path of the most recent capture, for "open last"</summary>
+    </key>
+
+  </schema>
+</schemalist>

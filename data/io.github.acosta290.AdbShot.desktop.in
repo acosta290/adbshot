@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=adbshot
+Name[es]=adbshot
+GenericName=Phone screenshots
+GenericName[es]=Capturas del móvil
+Comment=Capture the screen of an adb-connected phone straight to your clipboard
+Comment[es]=Captura la pantalla del móvil conectado por ADB directamente al portapapeles
+Exec=@BINDIR@/adbshot --settings
+Icon=io.github.acosta290.AdbShot
+Terminal=false
+Categories=Utility;GTK;
+Keywords=screenshot;android;adb;phone;captura;movil;pantalla;
+DBusActivatable=true
+StartupNotify=false
+X-GNOME-UsesNotifications=true

@@ -1,0 +1,24 @@
+[Unit]
+Description=adbshot — phone screenshots over ADB
+Documentation=file://@DOCDIR@/README.md
+PartOf=graphical-session.target
+After=graphical-session.target
+# Without this, five quick crashes put the unit in `failed`, and a failed unit
+# also disables the D-Bus activation that exists to resurrect the daemon --
+# turning the hotkey into a permanent silent no-op.
+StartLimitIntervalSec=0
+
+[Service]
+Type=dbus
+BusName=io.github.acosta290.AdbShot
+ExecStart=@BINDIR@/adbshot --gapplication-service
+# wl-copy forks a holder that owns the selection and inherits our cgroup, so
+# the default KillMode=control-group would empty the clipboard on every
+# `systemctl --user restart`.
+KillMode=process
+Restart=on-failure
+RestartSec=2
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target
