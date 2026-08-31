@@ -33,6 +33,8 @@ SPANISH = {
         "adb no devolvió una imagen (código {status}).",
     "adb returned no image: {error}":
         "adb no devolvió una imagen: {error}",
+    "The phone rejected the chosen screen. Unlock it and try again.":
+        "El móvil rechazó la pantalla elegida. Desbloquéalo e inténtalo de nuevo.",
     "The capture came out black. The screen is off, or the foreground app blocks screenshots (FLAG_SECURE).":
         "La captura salió en negro. La pantalla está apagada, o la app en primer plano bloquea las capturas (FLAG_SECURE).",
     "Could not process the capture: {error}":

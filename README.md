@@ -38,6 +38,7 @@ Super + X  ──▶  capture over ADB  ──▶  clipboard  ──▶  Ctrl + 
 | 🖼️ | **PNG, JPEG or WebP** — with 1–100 % quality and an output scale |
 | 📁 | **Optional saving** — your folder, your filename template, or clipboard only |
 | 📱 | **Several phones** — remembers the one you use, asks only when it matters |
+| 📐 | **Foldables** — finds the screen that is switched on, so a Fold never shoots the dark one |
 | 🔔 | **Subtle feedback** — shutter sound, animated tray icon, thumbnail notification |
 | 🗑️ | **Safe emptying** — only ever deletes its own captures, and to the Trash |
 | ⚡ | **Auto-paste** *(optional)* — with a shortcut you choose |
@@ -136,7 +137,8 @@ adbshot --self-check
 
 ```bash
 adbshot --out /tmp/x.jpg --format jpeg --quality 80 --scale 50 --clipboard
-adbshot --self-check          # full diagnostic
+adbshot --out /tmp/x.png --display 4630946722019192211   # pin a foldable to one screen
+adbshot --self-check          # full diagnostic (lists the screen ids)
 adbshot --install-hotkey      # re-register the shortcut if you removed it
 adbshot --help
 ```
@@ -182,8 +184,11 @@ no extra packages**.
 flowchart LR
     K["Super + X"] --> G["gdbus<br/><i>~7 ms</i>"]
     G --> D(("adbshot<br/>daemon"))
-    D --> A["adb exec-out<br/>screencap -p<br/><i>~0.66 s</i>"]
-    A --> V{"valid PNG<br/>signature?"}
+    D --> N{"more than<br/>one screen?"}
+    N -- no --> A
+    N -- yes --> L["pick the one<br/>that is switched on<br/><i>~80 ms</i>"]
+    L --> A["adb exec-out<br/>screencap -p<br/><i>~0.66 s</i>"]
+    A --> V{"PNG in<br/>the payload?"}
     V -- no --> E["readable error"]
     V -- yes --> W["worker thread"]
     W --> I["Pillow:<br/>format, quality, scale"]
@@ -226,9 +231,19 @@ status 0 — which `Restart=on-failure` will not recover. The icon would vanish 
 inherits our cgroup; with the default `KillMode`, `systemctl --user restart` would silently
 empty the clipboard the app just filled.
 
-**The PNG signature is checked before anything else.** `screencap` can fail with exit status 0
+**The PNG signature is *located*, not merely tested.** `screencap` can fail with exit status 0
 and a plain-text error on stdout; without the check you write a corrupt `.png` and push garbage
-to the clipboard.
+to the clipboard. But on a foldable it does something worse than fail: it prints `[Warning]
+Multiple displays were found…` on stdout and then appends a perfectly good PNG behind it. A
+`startswith` gate rejects that image; finding the signature and dropping the preamble keeps it.
+
+**A foldable is asked which screen is on before it is captured.** With no `-d`, `screencap`
+takes "the first display found" — on a Z Fold that is the cover screen, so an unfolded phone
+returns a black 1080×2520 frame with no error to key on. `dumpsys display` names the one whose
+`state` is `ON` (never `committedState`, which lags a fold by a frame) and whose input viewport
+is live, and `-d` pins the capture to it. It wants the 64-bit id from `uniqueId="local:…"`; the
+small logical ids dumpsys also prints are rejected. Single-screen phones are memoised so they
+pay the ~80 ms probe once a minute rather than once a capture.
 
 **Pillow always runs on a worker thread, in the daemon.** On the main loop it freezes it
 completely while encoding — zero frames delivered, not "a bit slower". (The one-shot `--out`
@@ -261,6 +276,7 @@ journalctl --user -u adbshot -b
 | No tray icon | No AppIndicator extension enabled, or the session is locked |
 | `Super`+`X` does nothing | Run `adbshot --install-hotkey` and check for a conflict |
 | The capture is black | The foreground app blocks screenshots (`FLAG_SECURE`), or the screen is off |
+| A foldable shoots the wrong screen | `adbshot --self-check` lists both ids and marks the one it picked |
 | "unauthorized" | Accept the USB debugging prompt on the phone |
 | Service will not start | `systemctl --user reset-failed adbshot && systemctl --user start adbshot` |
 | Interface is in the wrong language | *Preferences → Behaviour → Language* (default is English) |

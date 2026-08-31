@@ -221,4 +221,5 @@ check: lint
 
 lint:
 	@python3 tools/check-gettext.py
+	@python3 tools/check-displays.py
 	@python3 -m compileall -q src/adbshot >/dev/null && echo "ok: every module compiles"

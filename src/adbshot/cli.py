@@ -33,6 +33,8 @@ Usage:
 
 One-shot options (with --out):
   --device SERIAL   capture this device instead of the preferred one
+  --display ID      pin a foldable to one screen; run --self-check for the ids
+                    (default: whichever screen is powered on)
   --format FMT      png | jpeg | webp        (default: the configured format)
   --quality N       1-100                    (default: the configured quality)
   --scale N         10-100 percent           (default: the configured scale)
@@ -213,7 +215,7 @@ def one_shot(argv: list[str]) -> int:
         serial = found["serial"] or ""
         loop = GLib.MainLoop()
 
-    CaptureEngine().capture(serial, done, failed)
+    CaptureEngine().capture(serial, done, failed, display_id=opts.get("display"))
     GLib.timeout_add_seconds(20, loop.quit)
     loop.run()
     return status["code"]
@@ -259,6 +261,17 @@ def self_check() -> int:
               ", ".join(f"{d.label} ({d.serial})" for d in ready) or
               (", ".join(f"{d.serial}: {d.status_text()}" for d in devices) or "none connected"),
               fatal=False)
+        if ready:
+            # Foldables are the reason this row exists: it names the ids
+            # --display takes, and shows which one a capture would land on.
+            from .displays import pick, probe_sync
+            screens = probe_sync(ready[0].serial)
+            if len(screens) > 1:
+                chosen = pick(screens)
+                check("screens", True, "; ".join(
+                    ("→ " if chosen and d.physical_id == chosen.physical_id else "  ")
+                    + f"{d.physical_id} {d.width}x{d.height} {d.state.lower()}"
+                    for d in screens), fatal=False)
 
     check("wl-copy found", bool(_which("wl-copy")),
           _which("wl-copy") or "install it with: sudo apt install wl-clipboard")
